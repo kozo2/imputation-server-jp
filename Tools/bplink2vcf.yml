@@ -10,40 +10,26 @@ hints:
 arguments:
   - --allow-extra-chr
   - --recode
+  - vcf-iid
   - --bfile
   - $(inputs.in_bed.dirname)/$(inputs.in_bed.nameroot)
   - --out
   - $(inputs.out_name)
   - --biallelic-only
+  - strict
   - --keep-allele-order
 inputs:
-  # - id: bfile
-  #   type: string
   - id: in_bed
     type: File
     secondaryFiles:
       - ^.bim
       - ^.fam
-      - ^.log
-      - ^.nosex
-  # - id: in_bim
-  #   type: File
-  # - id: in_fam
-  #   type: File
-  # - id: in_log
-  #   type: File
-  # - id: in_nosex
-  #   type: File
   - id: out_name
     type: string
 outputs:
-  - id: all-for-debugging
-    type:
-      type: array
-      items: [File, Directory]
+  vcf_out:
+    type: File
+    secondaryFiles:
+      - ^.log
     outputBinding:
-      glob: "*"
-#  - id: out
-#    type: Any
-#    outputBinding:
-#      glob: "$(inputs.out_name)"
+      glob: "$(inputs.out_name).vcf"
